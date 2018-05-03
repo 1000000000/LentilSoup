@@ -1,4 +1,4 @@
-module Queue (empty, null, (<:), head, tail, fromList, toList, length) where
+module Queue (Queue(), empty, null, (<:), head, tail, fromList, toList, length) where
 
 import Prelude hiding (null,length,head,tail)
 import Data.List (genericLength)

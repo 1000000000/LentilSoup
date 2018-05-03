@@ -18,6 +18,6 @@ data Formula = Predicate IdName [Term]
  | And (Set Formula)
  | Forall IdName Formula
 
-data TruthTree = TruthTree {atomics :: Set Formula, formulae :: Set Formula, freeVars :: Set Term, foralls :: Queue (Formula,(Set IdName))}
+data TruthTree = TruthTree {atomics :: Set Formula, formulae :: Set Formula, freeVars :: Set IdName, foralls :: Queue (Formula,(Set IdName))}
 
 

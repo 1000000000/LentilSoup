@@ -14,10 +14,15 @@ instance Ord IdName where
 data Term = BoundVar IdName | FreeVar IdName | Function IdName [Term]
 
 data Formula = Predicate IdName [Term]
- | Not Formula
- | And (Set Formula)
- | Forall IdName Formula
+             | Not Formula
+             | And (Set Formula)
+             | Forall IdName Formula
 
-data TruthTree = TruthTree {atomics :: Set Formula, formulae :: Set Formula, freeVars :: Set IdName, foralls :: Queue (Formula,(Set IdName))}
+data TruthTree = TruthTree {
+  atomics  :: Set Formula,
+  formulae :: Set Formula,
+  freeVars :: Set IdName,
+  foralls  :: Queue (Formula,(Set IdName))
+}
 
 

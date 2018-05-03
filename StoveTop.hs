@@ -13,7 +13,8 @@ instance Ord IdName where
 
 data Term = BoundVar IdName | FreeVar IdName | Function IdName [Term]
 
-data Formula = Predicate IdName [Term]
+data Formula = Equal Term Term
+             | Predicate IdName [Term]
              | Not Formula
              | And (Set Formula)
              | Forall IdName Formula

@@ -19,10 +19,12 @@ data Formula = Predicate IdName [Term]
              | Forall IdName Formula
 
 data TruthTree = TruthTree {
+  closed   :: Bool,
   atomics  :: Set Formula,
   formulae :: Set Formula,
   freeVars :: Set IdName,
   foralls  :: Queue (Formula,(Set IdName))
 }
 
-
+treeDone :: TruthTree -> Bool
+treeDone tt = closed tt || Set.null (formulae tt) && Q.all ((freeVars tt==) . snd) (foralls tt)

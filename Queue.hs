@@ -1,7 +1,9 @@
-module Queue (Queue(), empty, null, (<:), head, tail, fromList, toList, length) where
+module Queue (Queue(), empty, null, (<:), head, tail, fromList, toList, length, any, all) where
 
-import Prelude hiding (null,length,head,tail)
+import Prelude hiding (null,length,head,tail,any,all)
 import Data.List (genericLength)
+
+import qualified Prelude as P
 
 infixl 5 <:
 
@@ -49,3 +51,9 @@ toList (Queue f r) = f ++ reverse r
 
 length :: Num a => Queue a -> a
 length (Queue f r) = genericLength f + genericLength r
+
+any :: (a -> Bool) -> Queue a -> Bool
+any p (Queue f r) = P.any p f || P.any p r
+
+all :: (a -> Bool) -> Queue a -> Bool
+all p (Queue f r) = P.all p f || P.all p r

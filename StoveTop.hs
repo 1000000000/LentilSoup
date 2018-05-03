@@ -9,7 +9,7 @@ instance Eq IdName where
   a == b = id a == id b
 
 instance Ord IdName where
-  a < b = id a < id b
+  a <= b = id a <= id b
 
 data Term = BoundVar IdName | FreeVar IdName | Function IdName [Term]
 

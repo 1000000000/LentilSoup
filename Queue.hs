@@ -15,11 +15,10 @@ instance Eq a => Eq (Queue a) where
     | otherwise                = head q1 == head q2 && tail q1 == tail q2
 
 instance Ord a => Ord (Queue a) where
-  q1 < q2
-    | null q1 && null q2       = False
-    | null q1 && not (null q2) = True
-    | null q2 && not (null q1) = False
-    | otherwise                = head q1 < head q2 || (head q1 == head q2 && tail q1 < tail q2)
+  q1 <= q2
+    | null q1                  = True
+    | null q2                  = False
+    | otherwise                = head q1 < head q2 || (head q1 == head q2 && tail q1 <= tail q2)
 
 instance Functor Queue where
   fmap fxn (Queue f r) = Queue (fmap fxn f) (fmap fxn r)

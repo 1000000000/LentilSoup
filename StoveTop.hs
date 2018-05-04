@@ -50,5 +50,27 @@ empty = TruthTree {
   foralls  = Q.empty
 }
 
+notConsistent :: Formula -> TruthTree -> Bool
+notConsistent _ tt | closed tt = True
+notConsistent formula tt =
+  case formula of
+    Equal t1 t2
+      | t1 == t2          -> False
+      | t1 /= t2          -> not $ isSound tt
+    Not (Equal t1 t2)     -> t1 /= t2
+    p@(Predicate _ _)     -> Set.member (Not p) $ atomics tt
+    Not p@(Predicate _ _) -> Set.member p $ atomics tt
+    a@(And _)             -> Set.member (Not a) $ formulae tt
+    Not a@(And _)         -> Set.member a $ formulae tt
+    f@(Forall _ _)        -> Set.member (Not f) $ formulae tt
+    Not f@(Forall _ _)    -> Q.elem f . fmap fst $ foralls tt
+
+isSound :: TruthTree -> Bool
+isSound tt
+  | any (flip notConsistent tt) (atomics tt)  = False
+  | any (flip notConsistent tt) (formulae tt) = False
+  | otherwise                                 = True
+-- | Q.any (flip notConsistent tt . fst) (foralls tt) = False (redundant)
+
 treeDone :: TruthTree -> Bool
 treeDone tt = closed tt || Set.null (formulae tt) && Q.all ((freeVars tt==) . snd) (foralls tt)

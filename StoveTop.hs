@@ -32,6 +32,7 @@ data Formula = Equal Term Term
 --  6. The snd of each element in foralls is a subset of freeVars
 --  7. The fst of each element in foralls has been decomposed with each free
 --      variable in snd of that elelement
+--  8. Double negation does not appear as a top level formula in the TruthTree
 data TruthTree = TruthTree {
   closed   :: Bool,
   atomics  :: Set Formula,

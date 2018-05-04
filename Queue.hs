@@ -1,6 +1,6 @@
-module Queue (Queue(), empty, null, (<:), head, tail, fromList, toList, length, any, all) where
+module Queue (Queue(), empty, null, (<:), head, tail, fromList, toList, length, any, all, elem) where
 
-import Prelude hiding (null,length,head,tail,any,all)
+import Prelude hiding (null,length,head,tail,any,all,elem)
 import Data.List (genericLength)
 
 import qualified Prelude as P
@@ -33,7 +33,7 @@ null (Queue [] []) = True
 null _ = False
 
 (<:) :: Queue a -> a -> Queue a
-(Queue [] []) <: x = Queue [] [x]
+(Queue [] []) <: x = Queue [x] []
 (Queue f  r ) <: x = Queue f (x:r)
 
 head :: Queue a -> a
@@ -57,3 +57,6 @@ any p (Queue f r) = P.any p f || P.any p r
 
 all :: (a -> Bool) -> Queue a -> Bool
 all p (Queue f r) = P.all p f || P.all p r
+
+elem :: Eq a => a -> Queue a -> Bool
+elem x (Queue f r) = P.elem x f || P.elem x r
